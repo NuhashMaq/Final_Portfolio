@@ -1,0 +1,5 @@
+.footer{padding:28px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:center;margin-top:28px}
+.footerInner{width:min(1100px,92%);display:flex;align-items:center;justify-content:space-between;color:var(--muted)}
+.social{display:flex;gap:14px}
+.social a{text-decoration:none;color:var(--muted);font-weight:750}
+.social a:hover{color:#fff}

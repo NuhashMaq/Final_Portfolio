@@ -1,0 +1,27 @@
+# Env files
+.env
+frontend/.env
+.env.*
+
+# Node
+**/node_modules/
+**/build/
+**/dist/
+
+# Python
+**/__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Flask / SQLite
+**/instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.idea/
+.DS_Store
+Thumbs.db
+*.log

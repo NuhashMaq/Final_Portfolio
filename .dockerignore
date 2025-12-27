@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+
+# Node/React
+frontend/node_modules/
+frontend/build/
+
+# OS / editor
+.DS_Store
+.vscode/
+
+# Secrets
+.env
+frontend/.env
+
+# Local DB / logs
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Git
+.git/
+.github/

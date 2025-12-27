@@ -1,0 +1,16 @@
+.resumeList{display:flex;flex-direction:column;gap:14px}
+.resumeGrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.resumeCard{padding:16px;border-radius:16px;border:1px solid rgba(255,255,255,.10);background:var(--panel)}
+.resumeTop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.resumeTitle{font-weight:950;color:var(--text);margin-bottom:4px}
+.resumeTitle--caps{text-transform:uppercase;letter-spacing:.08em}
+.resumeOrg{color:var(--muted);font-weight:750}
+.resumeMeta{color:var(--muted-2);font-weight:700}
+.resumeBullets{margin:12px 0 0 18px;color:var(--muted);line-height:1.65}
+
+/* Small keyword chips (used in Certifications) */
+.tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{padding:6px 10px;border-radius:999px;font-size:.82rem;
+	background:rgba(var(--acc-rgb),.10);
+	border:1px solid rgba(var(--acc-rgb),.18);
+	color:rgba(232,251,255,.84)}

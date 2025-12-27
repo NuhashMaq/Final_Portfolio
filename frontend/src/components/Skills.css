@@ -1,0 +1,48 @@
+.skillsMarqueeStack{display:flex;flex-direction:column;gap:14px}
+
+.skillsMarqueeCard{padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:
+	linear-gradient(135deg,rgba(var(--acc-rgb),.08),rgba(255,255,255,.02));
+	position:relative;overflow:hidden}
+.skillsMarqueeCard:before{content:"";position:absolute;inset:-2px;opacity:.14;pointer-events:none;
+	background-image:
+		linear-gradient(rgba(var(--acc-rgb),.10) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(var(--acc-rgb),.10) 1px, transparent 1px);
+	background-size:34px 34px;
+	transform:skewX(-10deg)}
+
+.skillsMarqueeHead{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+.skillsMeta{color:var(--muted-2);font-weight:700;font-size:.9rem}
+
+.catPill{position:relative;z-index:1;padding:8px 12px;border-radius:999px;
+	background:linear-gradient(90deg,rgba(var(--acc2-rgb),.22),rgba(var(--acc-rgb),.12));
+	border:1px solid rgba(var(--acc-rgb),.22);
+	color:rgba(232,251,255,.95);
+	font-weight:950;letter-spacing:.10em;text-transform:uppercase;font-size:.78rem}
+
+.skillsMarqueeViewport{position:relative;z-index:1;overflow:hidden;border-radius:14px;border:1px solid rgba(255,255,255,.08);
+	background:rgba(255,255,255,.02);
+	mask-image:linear-gradient(90deg,transparent,black 10%,black 90%,transparent)}
+
+.skillsTrack{--gap:10px;
+	display:flex;gap:var(--gap);align-items:center;width:max-content;padding:12px;
+	animation:skillsMarquee var(--dur,28s) linear infinite}
+.skillsTrack--rev{animation-name:skillsMarqueeRev}
+.skillsMarqueeCard:hover .skillsTrack{animation-play-state:paused}
+
+.skillPill{padding:10px 12px;border-radius:999px;
+	background:rgba(255,255,255,.03);
+	border:1px solid rgba(255,255,255,.12);
+	color:var(--muted);
+	font-weight:700;font-size:.95rem;white-space:nowrap;
+	transition:transform .16s ease,border-color .16s ease,box-shadow .16s ease,color .16s ease,background .16s ease}
+.skillPill:hover{transform:translateY(-1px);border-color:rgba(var(--acc-rgb),.35);
+	box-shadow:0 14px 34px rgba(var(--acc-rgb),.10),0 10px 26px rgba(var(--acc3-rgb),.08);
+	color:var(--text);background:rgba(var(--acc-rgb),.06)}
+
+@keyframes skillsMarquee{to{transform:translateX(-50%)}}
+@keyframes skillsMarqueeRev{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+@media (prefers-reduced-motion: reduce){
+	.skillsTrack{animation:none;flex-wrap:wrap;max-width:100%;width:100%}
+	.skillsMarqueeViewport{mask-image:none}
+}

@@ -1,0 +1,39 @@
+*{box-sizing:border-box}
+
+:root{
+	--bg-0:#050816;
+	--bg-1:#07112a;
+	--panel:rgba(255,255,255,.035);
+	--panel-2:rgba(255,255,255,.055);
+	--border:rgba(255,255,255,.12);
+	--text:rgba(232,251,255,.92);
+	--muted:rgba(232,251,255,.70);
+	--muted-2:rgba(232,251,255,.56);
+
+	/* Cyber / tech palette */
+	--acc:#00e5ff;    /* neon cyan */
+	--acc2:#7c4dff;   /* electric purple */
+	--acc3:#ff2bd6;   /* magenta */
+	--acc4:#00ffa8;   /* mint accent */
+
+	/* RGB helpers for alpha compositions */
+	--acc-rgb:0,229,255;
+	--acc2-rgb:124,77,255;
+	--acc3-rgb:255,43,214;
+	--acc4-rgb:0,255,168;
+
+	--font-body:"Space Grotesk",system-ui,-apple-system,"Segoe UI",Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
+	--font-display:"Orbitron","Space Grotesk",system-ui,sans-serif;
+	--font-mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+}
+
+html,body{height:100%}
+html{scroll-behavior:smooth}
+body{margin:0;font-family:var(--font-body);background:var(--bg-0);color:var(--text);line-height:1.6}
+a{color:inherit}
+code,pre,kbd{font-family:var(--font-mono)}
+h1,h2,h3,.brand{font-family:var(--font-display)}
+.sectionTitle--caps{text-transform:uppercase;letter-spacing:.18em}
+::selection{background:rgba(var(--acc-rgb),.28)}
+
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
