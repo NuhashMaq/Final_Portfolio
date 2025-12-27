@@ -1,0 +1,27 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      # Set these on the server (recommended) or in an env_file.
+      FLASK_ENV: production
+      SECRET_KEY: ${SECRET_KEY}
+      DATABASE_URL: ${DATABASE_URL:-sqlite:////app/instance/portfolio.db}
+      CORS_ORIGINS: ${CORS_ORIGINS:-}
+
+      # Optional SMTP contact delivery
+      SMTP_HOST: ${SMTP_HOST:-smtp.gmail.com}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USERNAME: ${SMTP_USERNAME:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_USE_TLS: ${SMTP_USE_TLS:-true}
+      CONTACT_TO_EMAIL: ${CONTACT_TO_EMAIL:-}
+      CONTACT_FROM_EMAIL: ${CONTACT_FROM_EMAIL:-}
+    volumes:
+      # Persist the SQLite DB on the VM host
+      - portfolio_instance:/app/instance
+    restart: unless-stopped
+
+volumes:
+  portfolio_instance:
