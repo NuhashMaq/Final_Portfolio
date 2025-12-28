@@ -38,6 +38,8 @@ jobs:
       - name: Build
         working-directory: frontend
         env:
+          # Ensures CRA generates asset URLs for the GitHub Pages subpath.
+          PUBLIC_URL: /Final_Portfolio
           # Set this in GitHub Repo Settings -> Variables -> Actions
           # Example: https://<your-oracle-public-ip>:8000
           REACT_APP_API_URL: ${{ vars.REACT_APP_API_URL }}
