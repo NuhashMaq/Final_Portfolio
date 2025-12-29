@@ -29,7 +29,8 @@ PROFILE = {
     "links": {
         "linkedin": "https://www.linkedin.com/",
         "facebook": "https://www.facebook.com/",
-        "portfolio": "#"
+        "instagram": "https://www.instagram.com/",
+        "twitter": "https://x.com/_maashfiiiiq_"
     }
 }
 
@@ -66,72 +67,85 @@ CERTIFICATIONS = [
         "issuer": "Google Cloud",
         "type": "AI / Cloud / Large Language Models",
         "keywords": ["LLMs", "Generative AI", "Google Cloud", "AI foundations"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "LangChain Course for Beginners",
         "issuer": "Simplilearn",
         "type": "LLM Application Development",
         "keywords": ["LangChain", "AI agents", "Prompt chaining", "LLM apps"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "LLMOps for Beginners",
         "issuer": "Simplilearn",
         "type": "AI Operations / MLOps",
         "keywords": ["LLMOps", "MLOps", "Model deployment", "AI lifecycle"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "Structuring Machine Learning Projects",
         "issuer": "DeepLearning.AI (Andrew Ng)",
         "type": "Machine Learning Strategy",
         "keywords": ["ML strategy", "Project design", "Model evaluation"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "Machine Learning using Python",
         "issuer": "Simplilearn",
         "type": "Core Machine Learning",
         "keywords": ["Python", "Machine Learning", "Scikit-learn", "Data analysis"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "AI+ Prompt Engineer Level 1™",
         "issuer": "AI CERTs™",
         "type": "Prompt Engineering",
         "keywords": ["Prompt Engineering", "Generative AI", "LLM interaction"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "Craft Effective Prompts for Microsoft 365 Copilot",
         "issuer": "Microsoft",
         "type": "Enterprise AI / Productivity AI",
         "keywords": ["Microsoft Copilot", "AI productivity", "Prompt design"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "Master Git & GitHub - Beginner to Expert",
         "issuer": "Udemy",
         "type": "Version Control / Software Engineering",
         "keywords": ["Git", "GitHub", "Version control", "Collaboration"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     },
     {
         "title": "Digital Accessibility Training (DAT)",
         "issuer": "UNDP, ICT Division, Govt. of Bangladesh, a2i",
         "type": "Accessibility / Inclusive Design",
         "keywords": ["Accessibility", "WCAG", "Inclusive design", "UX"],
+        "url": "https://drive.google.com/drive/folders/1gXoceCFZ0oj5LIeiIymW1bJ5Xhoo7BSJ",
     }
 ]
 
 ACTIVITIES = [
     {
         "role": "Technical Executive",
-        "organization": "RCS - RUET Computing Society"
+        "organization": "RCS - RUET Computing Society",
+        "url": "https://www.facebook.com/ruetcs",
     },
     {
         "role": "Program Secretary",
-        "organization": "RUET | Onuronon Cultural Club"
+        "organization": "RUET | Onuronon Cultural Club",
+        "url": "https://www.facebook.com/search/top?q=onuronon%20-%20ruet%20cultural%20club",
     },
     {
         "role": "Workshop Secretary",
-        "organization": "Ovijatrik - RUET Adventure Club"
+        "organization": "Ovijatrik - RUET Adventure Club",
+        "url": "https://www.facebook.com/profile.php?id=61555982677745",
     },
     {
         "role": "Planning Secretary",
-        "organization": "SDAR - Sylhet Divisional Association, RUET"
+        "organization": "SDAR - Sylhet Divisional Association, RUET",
+        "url": "https://www.facebook.com/profile.php?id=61560067080855",
     }
 ]
