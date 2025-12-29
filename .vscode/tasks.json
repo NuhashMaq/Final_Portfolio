@@ -1,72 +1,136 @@
 {
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Backend: Create venv",
-      "type": "shell",
-      "command": "python",
-      "args": ["-m", "venv", "venv"],
-      "options": {
-        "cwd": "${workspaceFolder}/backend"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Backend: Install deps",
-      "type": "shell",
-      "command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
-      "args": ["-m", "pip", "install", "-r", "requirements.txt"],
-      "options": {
-        "cwd": "${workspaceFolder}/backend"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Backend: Seed DB",
-      "type": "shell",
-      "command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
-      "args": ["seed.py"],
-      "options": {
-        "cwd": "${workspaceFolder}/backend"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Backend: Start",
-      "type": "shell",
-      "command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
-      "args": ["app.py"],
-      "options": {
-        "cwd": "${workspaceFolder}/backend"
-      },
-      "problemMatcher": [],
-      "isBackground": true
-    },
-    {
-      "label": "Frontend: Install deps",
-      "type": "shell",
-      "command": "npm",
-      "args": ["install"],
-      "options": {
-        "cwd": "${workspaceFolder}/frontend"
-      },
-      "problemMatcher": []
-    },
-    {
-      "label": "Frontend: Start",
-      "type": "shell",
-      "command": "npm",
-      "args": ["start"],
-      "options": {
-        "cwd": "${workspaceFolder}/frontend"
-      },
-      "problemMatcher": [],
-      "isBackground": true
-    },
-    {
-      "label": "Run All (dev)",
-      "dependsOn": ["Backend: Start", "Frontend: Start"],
-      "problemMatcher": []
-    }
-  ]
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Backend: Create venv",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"venv",
+				"venv"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Backend: Install deps",
+			"type": "shell",
+			"command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
+			"args": [
+				"-m",
+				"pip",
+				"install",
+				"-r",
+				"requirements.txt"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Backend: Seed DB",
+			"type": "shell",
+			"command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
+			"args": [
+				"seed.py"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Backend: Start",
+			"type": "shell",
+			"command": "${workspaceFolder}/backend/venv/Scripts/python.exe",
+			"args": [
+				"app.py"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/backend"
+			},
+			"problemMatcher": [],
+			"isBackground": true
+		},
+		{
+			"label": "Frontend: Install deps",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"install"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Frontend: Start",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"start"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"problemMatcher": [],
+			"isBackground": true
+		},
+		{
+			"label": "Frontend: Build",
+			"type": "shell",
+			"command": "npm",
+			"args": [
+				"run",
+				"build"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}/frontend"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Run All (dev)",
+			"dependsOn": [
+				"Backend: Start",
+				"Frontend: Start"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Run (single server)",
+			"dependsOn": [
+				"Frontend: Build",
+				"Backend: Start"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Cleanup: Remove artifacts",
+			"type": "shell",
+			"command": "powershell",
+			"args": [
+				"-NoProfile",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-Command",
+				"$root = \"${workspaceFolder}\"; $targets = @(\"$root\\frontend\\build\",\"$root\\frontend\\node_modules\",\"$root\\backend\\venv\",\"$root\\backend\\__pycache__\",\"$root\\frontend\\build-error.log\",\"$root\\frontend\\build.log\"); foreach($t in $targets){ if (Test-Path -LiteralPath $t){ Write-Host \"Removing $t\"; Remove-Item -LiteralPath $t -Recurse -Force } else { Write-Host \"Skip $t\" } }"
+			],
+			"isBackground": false,
+			"problemMatcher": []
+		},
+		{
+			"label": "Cleanup: Remove artifacts (ps)",
+			"type": "shell",
+			"command": "$ErrorActionPreference='Continue'; $root=\"${workspaceFolder}\"; $targets=@(\"$root\\frontend\\build\",\"$root\\frontend\\node_modules\",\"$root\\backend\\venv\",\"$root\\backend\\__pycache__\",\"$root\\frontend\\build-error.log\",\"$root\\frontend\\build.log\"); foreach($t in $targets){ if(Test-Path -LiteralPath $t){ Write-Host \"Removing $t\"; Remove-Item -LiteralPath $t -Recurse -Force } else { Write-Host \"Skip $t\" } }",
+			"args": [],
+			"isBackground": false,
+			"problemMatcher": []
+		}
+	]
 }

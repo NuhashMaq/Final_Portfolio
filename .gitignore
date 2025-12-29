@@ -3,6 +3,10 @@
 frontend/.env
 .env.*
 
+# Allow sharing example env files
+!.env.example
+!frontend/.env.example
+
 # Node
 **/node_modules/
 **/build/
