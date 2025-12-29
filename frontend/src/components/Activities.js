@@ -14,7 +14,13 @@ export default function Activities({ items }) {
             {items.map((a, idx) => (
               <article className="resumeCard gsap-item" key={`${a.role}-${idx}`}>
                 <div className="resumeTitle resumeTitle--caps">{a.role}</div>
-                <div className="resumeOrg">{a.organization}</div>
+                {a.url ? (
+                  <a className="resumeOrg resumeOrg--link" href={a.url} target="_blank" rel="noreferrer">
+                    {a.organization}
+                  </a>
+                ) : (
+                  <div className="resumeOrg">{a.organization}</div>
+                )}
               </article>
             ))}
           </div>

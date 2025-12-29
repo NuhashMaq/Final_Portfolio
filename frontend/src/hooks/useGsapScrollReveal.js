@@ -49,6 +49,9 @@ export default function useGsapScrollReveal() {
             filter: 'blur(0px)',
             scale: 1,
             duration: 1.05,
+            // Keep the element crisp after GSAP clears inline styles.
+            // Without this, CSS `.reveal{filter:blur(...)}` can re-apply and blur the whole site.
+            onComplete: () => el.classList.add('reveal--in'),
             clearProps: 'filter'
           }
         );

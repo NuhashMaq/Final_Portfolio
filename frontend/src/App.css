@@ -4,16 +4,48 @@
 	radial-gradient(850px 650px at 55% 85%,rgba(var(--acc3-rgb),.08),transparent 55%),
 	linear-gradient(180deg,var(--bg-0) 0%,var(--bg-1) 100%);
 	position:relative;
+	isolation:isolate;
 }
-.app:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.18;
+.app:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.10;
 	background-image:
-		linear-gradient(rgba(var(--acc-rgb),.06) 1px, transparent 1px),
-		linear-gradient(90deg, rgba(var(--acc-rgb),.06) 1px, transparent 1px);
+		linear-gradient(rgba(var(--acc-rgb),.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(var(--acc-rgb),.05) 1px, transparent 1px);
 	background-size:48px 48px;
 	mask-image:radial-gradient(circle at 40% 30%,rgba(0,0,0,.95),rgba(0,0,0,.35) 55%,rgba(0,0,0,0) 75%);
 }
-main{padding-top:80px}
+main{padding-top:80px;position:relative;z-index:1}
 .apiBanner{max-width:1000px;margin:18px auto 0;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:rgba(255,110,110,.12);color:#ffd7d7}
+
+/* Frosted glossy sections */
+.sectionInner{border-radius:18px;
+	padding:26px 22px;
+	border:1px solid rgba(255,255,255,.10);
+	background:rgba(255,255,255,.03);
+	backdrop-filter:blur(12px) saturate(1.08);
+	box-shadow:0 28px 90px rgba(0,0,0,.24);
+	transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease,background .22s ease;
+	position:relative;
+	overflow:hidden}
+.sectionInner:before{content:"";position:absolute;inset:-40%;pointer-events:none;opacity:.70;
+	background:
+		radial-gradient(circle at 25% 22%, rgba(var(--acc-rgb),.10), transparent 62%),
+		radial-gradient(circle at 80% 70%, rgba(var(--acc2-rgb),.08), transparent 64%);
+	filter:blur(18px);
+	transition:opacity .22s ease}
+.sectionInner:after{content:"";position:absolute;inset:-2px;pointer-events:none;opacity:.18;
+	background:linear-gradient(110deg,transparent 0%,rgba(255,255,255,.14) 26%,rgba(255,255,255,.07) 34%,transparent 48%);
+	transform:translate3d(calc(var(--fx-x-s, 0px) * -1),calc(var(--fx-y-s, 0px) * -1),0);
+	transition:opacity .22s ease,transform .22s ease}
+.sectionInner:hover{border-color:rgba(var(--acc-rgb),.18);
+	background:rgba(255,255,255,.04);
+	transform:translateY(-1px);
+	box-shadow:0 42px 140px rgba(0,0,0,.32),0 0 44px rgba(var(--acc-rgb),.14),0 0 54px rgba(var(--acc2-rgb),.10),0 0 66px rgba(var(--acc3-rgb),.06)}
+.sectionInner:hover:before{opacity:1}
+.sectionInner:hover:after{opacity:.28;transform:translate3d(0,0,0)}
+
+@media (max-width:760px){
+	.sectionInner{padding:22px 18px}
+}
 
 /* Scroll reveal animation (no external libs) */
 .reveal{opacity:0;transform:translateY(14px) scale(.99);filter:blur(4px);transition:opacity .65s cubic-bezier(.2,.8,.2,1),transform .65s cubic-bezier(.2,.8,.2,1),filter .65s cubic-bezier(.2,.8,.2,1)}

@@ -16,6 +16,11 @@ export default function Certifications({ items }) {
                 <div className="resumeTitle resumeTitle--caps">{c.title}</div>
                 {c.issuer ? <div className="resumeOrg">{c.issuer}</div> : null}
                 {c.type ? <div className="resumeMeta">{c.type}</div> : null}
+                {c.url ? (
+                  <a className="resumeLink" href={c.url} target="_blank" rel="noreferrer">
+                    View Certificate
+                  </a>
+                ) : null}
                 {c.keywords?.length ? (
                   <div className="tags" style={{ marginTop: 10 }}>
                     {c.keywords.map((k, i) => (

@@ -1,0 +1,30 @@
+.toTop{position:fixed;right:22px;bottom:22px;z-index:1200;
+	width:52px;height:52px;border-radius:16px;
+	border:1px solid rgba(var(--acc-rgb),.18);
+	background:rgba(255,255,255,.04);
+	backdrop-filter:blur(10px) saturate(1.06);
+	color:rgba(232,251,255,.94);
+	opacity:0;transform:translate3d(0,10px,0) scale(.96);
+	pointer-events:none;
+	transition:opacity .2s ease,transform .2s ease,box-shadow .2s ease,border-color .2s ease,background .2s ease}
+
+.toTop--visible{opacity:1;transform:translate3d(0,0,0) scale(1);
+	pointer-events:auto}
+
+.toTopIcon{font-family:var(--font-display);font-weight:1000;font-size:20px;line-height:1;
+	filter:drop-shadow(0 0 14px rgba(var(--acc-rgb),.18))}
+
+.toTop:hover{transform:translate3d(0,-2px,0) scale(1.03);
+	background:rgba(255,255,255,.07);
+	border-color:rgba(var(--acc-rgb),.34);
+	box-shadow:0 26px 80px rgba(0,0,0,.36),0 0 26px rgba(var(--acc-rgb),.20),0 0 42px rgba(var(--acc2-rgb),.14)}
+
+.toTop:focus-visible{outline:2px solid rgba(var(--acc-rgb),.42);outline-offset:4px}
+
+@media (max-width:760px){
+	.toTop{right:16px;bottom:16px}
+}
+
+@media (prefers-reduced-motion: reduce){
+	.toTop{transition:none !important}
+}

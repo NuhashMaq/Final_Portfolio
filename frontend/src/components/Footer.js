@@ -1,17 +1,39 @@
 import React from 'react';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import './Footer.css';
 
 export default function Footer({ profile }) {
-  const year = new Date().getFullYear();
   const links = profile?.links || {};
+  const fullName = profile?.fullName || 'Mashfiq Naushad';
   return (
     <footer className="footer">
       <div className="footerInner">
-        <div className="copy">© {year} {profile?.fullName || 'Your Name'}</div>
+        <div className="footerLeft">
+          <a className="footerName" href="#home">{fullName}</a>
+          <div className="copy">Copyright @__maashfiiiiq__ | All rights are reserved | 2025</div>
+        </div>
         <div className="social">
-          {links.linkedin ? <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a> : null}
-          {links.facebook ? <a href={links.facebook} target="_blank" rel="noreferrer">Facebook</a> : null}
-          {links.portfolio ? <a href={links.portfolio} target="_blank" rel="noreferrer">Portfolio</a> : null}
+          {links.linkedin ? (
+            <a className="socialIcon" href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+              <FaLinkedinIn className="socialSvg" aria-hidden="true" />
+            </a>
+          ) : null}
+          {links.facebook ? (
+            <a className="socialIcon" href={links.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">
+              <FaFacebookF className="socialSvg" aria-hidden="true" />
+            </a>
+          ) : null}
+          {links.instagram ? (
+            <a className="socialIcon" href={links.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">
+              <FaInstagram className="socialSvg" aria-hidden="true" />
+            </a>
+          ) : null}
+          {links.twitter ? (
+            <a className="socialIcon" href={links.twitter} target="_blank" rel="noreferrer" aria-label="X (Twitter)">
+              <FaXTwitter className="socialSvg" aria-hidden="true" />
+            </a>
+          ) : null}
         </div>
       </div>
     </footer>

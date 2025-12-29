@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import './Hero.css';
 import placeholderAvatar from '../assets/profile-placeholder.svg';
@@ -9,7 +9,7 @@ export default function Hero({ profile }) {
   const rootRef = useRef(null);
   const reducedMotion = usePrefersReducedMotion();
 
-  const name = profile?.fullName || 'Your Name';
+  const name = 'MASHFIQ NAUSHAD';
   const headline = profile?.headline || 'AI/ML • Full‑Stack • Problem Solving';
   const location = profile?.location || '';
   const cvUrl = profile?.cvUrl || '';
@@ -22,6 +22,17 @@ export default function Hero({ profile }) {
   }, [profile]);
 
   const [srcIndex, setSrcIndex] = useState(0);
+  const [typingCycle, setTypingCycle] = useState(0);
+
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+
+    const id = window.setInterval(() => {
+      setTypingCycle((v) => v + 1);
+    }, 5000);
+
+    return () => window.clearInterval(id);
+  }, [reducedMotion]);
 
   useLayoutEffect(() => {
     if (reducedMotion) return;
@@ -80,19 +91,40 @@ export default function Hero({ profile }) {
         </div>
 
         <div className="heroCopy">
-        <p className="kicker">{headline}</p>
-        <h1>
-          {name}
-        </h1>
-        {location ? <p className="kicker kicker--location">{location}</p> : null}
-        <div className="ctaRow">
-          <a className="btnPrimary" href="#projects">View Projects</a>
-          <a className="btnGhost" href="#about">About</a>
-          {cvUrl ? (
-            <a className="btnGhost btnCv" href={cvUrl} target="_blank" rel="noreferrer">Download CV</a>
-          ) : null}
-          <a className="btnGhost" href="#contact">Contact</a>
-        </div>
+          <p className="kicker">{headline}</p>
+
+          <h1 className="heroName" aria-label={name}>
+            <span
+              key={reducedMotion ? 'static' : `typing-${typingCycle}`}
+              className={`${reducedMotion ? '' : 'heroNameType'} heroNameLetters`.trim()}
+            >
+              {name.split('').map((ch, idx) =>
+                ch === ' ' ? (
+                  <span key={`sp-${idx}`} className="heroChar heroChar--space">&nbsp;</span>
+                ) : (
+                  <span
+                    key={`${ch}-${idx}`}
+                    className={`heroChar ${reducedMotion ? '' : 'heroChar--type'}`.trim()}
+                    style={reducedMotion ? undefined : { animationDelay: `${idx * 0.10}s` }}
+                  >
+                    {ch}
+                  </span>
+                )
+              )}
+            </span>
+            {!reducedMotion ? <span className="heroCaret" aria-hidden="true" /> : null}
+          </h1>
+
+          {location ? <p className="kicker kicker--location">{location}</p> : null}
+
+          <div className="ctaRow">
+            <a className="btnPrimary" href="#projects">View Projects</a>
+            <a className="btnGhost" href="#about">About</a>
+            {cvUrl ? (
+              <a className="btnGhost btnCv" href={cvUrl} target="_blank" rel="noreferrer">Download CV</a>
+            ) : null}
+            <a className="btnGhost" href="#contact">Contact</a>
+          </div>
         </div>
       </div>
     </section>

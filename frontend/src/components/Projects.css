@@ -7,9 +7,15 @@
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
 
 .card{padding:16px;border-radius:18px;border:1px solid var(--border);background:var(--panel);
+	position:relative;overflow:hidden;
 	transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.card:before{content:"";position:absolute;inset:-1px;border-radius:18px;pointer-events:none;opacity:0;
+	background:linear-gradient(90deg,rgba(var(--acc-rgb),.28),rgba(var(--acc2-rgb),.20),rgba(var(--acc3-rgb),.18));
+	filter:blur(10px);
+	transition:opacity .22s ease}
 .card:hover{border-color:rgba(var(--acc-rgb),.32);transform:translateY(-2px);
-	box-shadow:0 24px 60px rgba(0,0,0,.25)}
+	box-shadow:0 24px 60px rgba(0,0,0,.25),0 0 26px rgba(var(--acc-rgb),.10)}
+.card:hover:before{opacity:.9}
 
 .thumb{height:182px;border-radius:16px;overflow:hidden;position:relative;
 	background:linear-gradient(135deg,rgba(var(--acc2-rgb),.16),rgba(var(--acc-rgb),.10));
@@ -36,6 +42,6 @@
 	color:rgba(232,251,255,.84)}
 
 .link{color:rgba(var(--acc-rgb),.95);text-decoration:none;font-weight:800}
-.link:hover{color:#fff}
+.link:hover{color:#fff;text-shadow:0 0 18px rgba(var(--acc-rgb),.20)}
 
 .empty{padding:16px;border-radius:16px;border:1px dashed rgba(var(--acc-rgb),.22);color:var(--muted)}

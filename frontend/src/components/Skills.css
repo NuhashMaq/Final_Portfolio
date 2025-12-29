@@ -2,13 +2,28 @@
 
 .skillsMarqueeCard{padding:14px;border-radius:18px;border:1px solid rgba(255,255,255,.10);background:
 	linear-gradient(135deg,rgba(var(--acc-rgb),.08),rgba(255,255,255,.02));
-	position:relative;overflow:hidden}
+	position:relative;overflow:hidden;
+	transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease,background .18s ease,filter .18s ease}
 .skillsMarqueeCard:before{content:"";position:absolute;inset:-2px;opacity:.14;pointer-events:none;
 	background-image:
 		linear-gradient(rgba(var(--acc-rgb),.10) 1px, transparent 1px),
 		linear-gradient(90deg, rgba(var(--acc-rgb),.10) 1px, transparent 1px);
 	background-size:34px 34px;
 	transform:skewX(-10deg)}
+
+.skillsMarqueeCard:hover,
+.skillsMarqueeCard:focus-within{
+	transform:translateY(-2px);
+	border-color:rgba(var(--acc-rgb),.26);
+	background:linear-gradient(135deg,rgba(var(--acc-rgb),.10),rgba(255,255,255,.025));
+	box-shadow:
+		0 26px 70px rgba(0,0,0,.30),
+		0 0 28px rgba(var(--acc-rgb),.14),
+		0 0 46px rgba(var(--acc2-rgb),.10);
+	filter:saturate(1.05)
+}
+.skillsMarqueeCard:hover:before,
+.skillsMarqueeCard:focus-within:before{opacity:.22}
 
 .skillsMarqueeHead{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
 .skillsMeta{color:var(--muted-2);font-weight:700;font-size:.9rem}

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { FaFacebookF, FaInstagram, FaLinkedinIn } from 'react-icons/fa';
+import { FaXTwitter } from 'react-icons/fa6';
 import { apiPost } from '../api';
 import './Contact.css';
 
@@ -47,9 +49,26 @@ export default function Contact({ profile }) {
               ) : null}
               {profile?.location ? <div className="contactMeta">{profile.location}</div> : null}
               <div className="contactSocial">
-                {links.linkedin ? <a href={links.linkedin} target="_blank" rel="noreferrer">LinkedIn</a> : null}
-                {links.facebook ? <a href={links.facebook} target="_blank" rel="noreferrer">Facebook</a> : null}
-                {links.portfolio ? <a href={links.portfolio} target="_blank" rel="noreferrer">Portfolio</a> : null}
+                {links.linkedin ? (
+                  <a className="socialIcon" href={links.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                    <FaLinkedinIn className="socialSvg" aria-hidden="true" />
+                  </a>
+                ) : null}
+                {links.facebook ? (
+                  <a className="socialIcon" href={links.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">
+                    <FaFacebookF className="socialSvg" aria-hidden="true" />
+                  </a>
+                ) : null}
+                {links.instagram ? (
+                  <a className="socialIcon" href={links.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">
+                    <FaInstagram className="socialSvg" aria-hidden="true" />
+                  </a>
+                ) : null}
+                {links.twitter ? (
+                  <a className="socialIcon" href={links.twitter} target="_blank" rel="noreferrer" aria-label="X (Twitter)">
+                    <FaXTwitter className="socialSvg" aria-hidden="true" />
+                  </a>
+                ) : null}
               </div>
             </div>
           </div>
@@ -71,7 +90,7 @@ export default function Contact({ profile }) {
           </label>
 
           <div className="actions">
-            <button className="btnPrimary" type="submit" disabled={status === 'sending'}>
+            <button className="btnGhost" type="submit" disabled={status === 'sending'}>
               {status === 'sending' ? 'Sending…' : 'Send'}
             </button>
             {status === 'sent' ? (

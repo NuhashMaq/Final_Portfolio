@@ -10,8 +10,11 @@ import Certifications from './components/Certifications';
 import Activities from './components/Activities';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import TechBackgroundFX from './components/TechBackgroundFX';
+import ScrollToTopButton from './components/ScrollToTopButton';
 import { apiGet } from './api';
 import useGsapScrollReveal from './hooks/useGsapScrollReveal';
+import useAmbientMotionVars from './hooks/useAmbientMotionVars';
 import './App.css';
 
 export default function App() {
@@ -64,8 +67,12 @@ export default function App() {
   // Site-wide scroll reveal using GSAP (with reduced-motion support).
   useGsapScrollReveal();
 
+  // Ambient cursor/scroll vars to drive background parallax + lighting.
+  useAmbientMotionVars();
+
   return (
     <div className="app">
+      <TechBackgroundFX />
       <Navigation profile={profile} />
       {!apiOk ? (
         <div className="apiBanner">
@@ -84,6 +91,7 @@ export default function App() {
         <Contact profile={profile} />
       </main>
       <Footer profile={profile} />
+      <ScrollToTopButton />
     </div>
   );
 }

@@ -1,42 +1,83 @@
-.nav{position:fixed;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;background:rgba(5,8,22,.72);backdrop-filter:blur(14px);border-bottom:1px solid rgba(var(--acc-rgb),.14);z-index:1000;
-	transition:background .28s ease,border-color .28s ease,backdrop-filter .28s ease}
+.nav{position:fixed;top:0;left:0;right:0;height:80px;display:flex;align-items:center;justify-content:center;background:rgba(5,8,22,.48);backdrop-filter:blur(14px);border-bottom:1px solid rgba(var(--acc-rgb),.10);z-index:1000;
+	transition:background .28s ease,border-color .28s ease,backdrop-filter .28s ease,transform .34s cubic-bezier(.2,.8,.2,1),opacity .28s ease}
+.nav--hidden{transform:translate3d(0,-110%,0);opacity:0.0;pointer-events:none}
 .navInner{width:min(1100px,92%);display:flex;align-items:center;justify-content:space-between;
 	transition:opacity .28s cubic-bezier(.2,.8,.2,1),transform .28s cubic-bezier(.2,.8,.2,1)}
 
 /* When the hamburger menu is open, the navbar bar should vanish. */
 .nav--menuOpen{background:transparent;border-bottom:none;backdrop-filter:none}
 .nav--menuOpen .navInner{opacity:0;transform:translateY(-10px);pointer-events:none}
-.brand{font-weight:1000;letter-spacing:.26em;text-transform:uppercase;font-size:1.55rem;
-	padding:10px 12px;border-radius:14px;
-	border:1px solid rgba(var(--acc-rgb),.20);
-	background:
-		linear-gradient(135deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-	box-shadow:0 18px 50px rgba(0,0,0,.25),0 0 24px rgba(var(--acc-rgb),.10);
+
+/* Brand button matches hamburger size */
+.brand{width:44px;height:44px;display:grid;place-items:center;
+	padding:0;border-radius:12px;
+	border:1px solid rgba(var(--acc-rgb),.18);
+	background:rgba(5,8,22,.72);
+	box-shadow:0 16px 44px rgba(0,0,0,.25),0 0 14px rgba(var(--acc-rgb),.05);
 	position:relative;isolation:isolate;
 	text-decoration:none;
 	color:inherit;
 	-webkit-tap-highlight-color:transparent}
 .brand:focus{outline:none}
 .brand:focus-visible{outline:2px solid rgba(var(--acc-rgb),.38);outline-offset:3px}
-.brand:before{content:"";position:absolute;inset:-1px;border-radius:14px;z-index:-1;opacity:.85;
-	background:linear-gradient(90deg,rgba(var(--acc-rgb),.35),rgba(var(--acc2-rgb),.25),rgba(var(--acc3-rgb),.22))}
-.brandText{color:transparent;background-clip:text;-webkit-background-clip:text;
-	background-image:linear-gradient(45deg,var(--acc),var(--acc2),var(--acc3));
+.brandMark{display:inline-grid;place-items:center;position:relative;isolation:isolate}
+
+/* Unique MN logo mark (letters, but monogram-like and computing themed) */
+.brandLogo{position:relative;width:30px;height:30px;border-radius:11px;display:block;isolation:isolate}
+.brandLogoBg{position:absolute;inset:0;border-radius:10px;z-index:0;
+	background:
+		linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,0)),
+		rgba(5,8,22,.72);
+	box-shadow:none}
+.brandLogoTrace{position:absolute;inset:-6px;border-radius:12px;z-index:-1;opacity:.28;pointer-events:none;
+	background:
+		radial-gradient(80px 60px at 20% 25%, rgba(var(--acc-rgb),.22), transparent 60%),
+		radial-gradient(70px 60px at 80% 75%, rgba(var(--acc2-rgb),.18), transparent 60%);
+	filter:blur(10px);
+	transition:opacity .18s ease,filter .18s ease,transform .18s ease}
+.brandLogoLetters{position:absolute;inset:0;display:block;z-index:1}
+.brandLogoM{position:absolute;top:50%;left:50%;transform:translate(-50%,-52%);
+	font-family:var(--font-logo);font-weight:800;letter-spacing:0;
+	line-height:1;
+	font-size:28px;
+	background-image:linear-gradient(90deg,var(--acc),var(--acc2),var(--acc3));
+	-webkit-background-clip:text;background-clip:text;
+	color:transparent;-webkit-text-fill-color:transparent;
 	text-shadow:
-		0 0 10px rgba(var(--acc-rgb),.24),
-		0 0 24px rgba(var(--acc2-rgb),.18),
-		0 0 38px rgba(var(--acc3-rgb),.14);
-	filter:drop-shadow(0 0 16px rgba(var(--acc-rgb),.20));
-	animation:brandPulse 4.8s ease-in-out infinite}
-.links{display:flex;gap:18px}
-.links a{color:var(--muted);text-decoration:none;font-weight:800;position:relative;
+		0 0 10px rgba(var(--acc-rgb),.55),
+		0 0 22px rgba(var(--acc2-rgb),.32),
+		0 0 42px rgba(var(--acc3-rgb),.18);
+	filter:drop-shadow(0 0 14px rgba(var(--acc-rgb),.22))}
+.brandLogo:after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+	/* Soft glare (no inner frame) */
+	background:radial-gradient(22px 18px at 28% 26%,rgba(255,255,255,.10),transparent 65%);
+	opacity:.55}
+.brand:hover{transform:translateY(-1px) scale(1.03);
+	box-shadow:0 22px 70px rgba(0,0,0,.30),0 0 26px rgba(var(--acc-rgb),.14),0 0 38px rgba(var(--acc2-rgb),.10)}
+.brand:hover .brandLogoTrace{opacity:.60;filter:blur(12px);transform:scale(1.05)}
+.brand:hover .brandLogoM{transform:translate(-50%,-52%) scale(1.10);
+	text-shadow:
+		0 0 14px rgba(var(--acc-rgb),.68),
+		0 0 26px rgba(var(--acc2-rgb),.44),
+		0 0 44px rgba(var(--acc3-rgb),.22)
+}
+.links{display:flex;gap:10px}
+.links a{color:var(--text);text-decoration:none;font-weight:800;position:relative;
 	font-family:var(--font-display);
 	text-transform:uppercase;
 	letter-spacing:.16em;
-	font-size:.78rem}
-.links a:after{content:"";position:absolute;left:0;right:0;bottom:-6px;height:2px;border-radius:999px;background:linear-gradient(90deg,transparent,var(--acc),transparent);opacity:0;transform:translateY(2px);transition:.18s ease}
-.links a:hover{color:var(--text)}
-.links a:hover:after{opacity:.9;transform:translateY(0)}
+	font-size:.78rem;
+	display:inline-flex;align-items:center;
+	padding:10px 10px;
+	border-radius:12px;
+	transition:transform .16s ease,filter .16s ease,background .16s ease,box-shadow .16s ease,color .16s ease}
+.links a:after{display:none}
+.links a:hover{color:#fff;
+	background:rgba(255,255,255,.04);
+	transform:translateY(-1px) scale(1.06);
+	text-shadow:0 0 18px rgba(var(--acc-rgb),.16);
+	box-shadow:0 18px 50px rgba(0,0,0,.22),0 0 18px rgba(var(--acc-rgb),.10)}
+.links a:focus-visible{outline:2px solid rgba(var(--acc-rgb),.38);outline-offset:6px;border-radius:10px}
 
 /* Hamburger button (shown on mobile/tablet) */
 .menuButton{display:none;align-items:center;justify-content:center;gap:10px;
@@ -44,11 +85,33 @@
 	border:1px solid rgba(var(--acc-rgb),.18);
 	background:rgba(255,255,255,.03);
 	color:var(--text);
-	box-shadow:0 18px 50px rgba(0,0,0,.25),0 0 24px rgba(var(--acc-rgb),.10)}
-.menuButton:hover{background:rgba(255,255,255,.06)}
+	box-shadow:0 18px 50px rgba(0,0,0,.25),0 0 24px rgba(var(--acc-rgb),.10);
+	position:relative;isolation:isolate;
+	transition:transform .18s ease,background .18s ease,border-color .18s ease,box-shadow .18s ease,filter .18s ease}
+.menuButton:before{content:"";position:absolute;inset:-2px;border-radius:14px;z-index:-1;opacity:0;
+	background:linear-gradient(90deg,rgba(var(--acc-rgb),.45),rgba(var(--acc2-rgb),.32),rgba(var(--acc3-rgb),.22));
+	filter:blur(10px);
+	transition:opacity .18s ease,filter .18s ease}
+.menuButton:hover{background:rgba(255,255,255,.06);
+	border-color:rgba(var(--acc-rgb),.30);
+	transform:translateY(-1px) scale(1.05);
+	box-shadow:0 22px 64px rgba(0,0,0,.30),0 0 26px rgba(var(--acc-rgb),.20),0 0 44px rgba(var(--acc2-rgb),.12)}
+.menuButton:hover:before{opacity:.85;filter:blur(12px)}
+.menuButton:active{transform:translateY(0) scale(1.02)}
+.menuButton:focus{outline:none}
+.menuButton:focus-visible{outline:2px solid rgba(var(--acc-rgb),.38);outline-offset:4px}
+.nav[data-menu-open="true"] .menuButton{animation:menuNeonPulse 1.8s ease-in-out infinite}
 .menuIcon{display:grid;gap:6px}
 .menuIcon span{display:block;width:18px;height:2px;border-radius:999px;
-	background:linear-gradient(90deg,var(--acc),var(--acc2))}
+	background:linear-gradient(90deg,var(--acc),var(--acc2));
+	transform-origin:center;
+	transition:transform .42s cubic-bezier(.16,1,.3,1),opacity .24s ease,filter .24s ease}
+.menuButton:hover .menuIcon span{filter:drop-shadow(0 0 12px rgba(var(--acc-rgb),.24))}
+
+/* Hamburger morph → X */
+.menuIcon--open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.menuIcon--open span:nth-child(2){opacity:0;transform:scaleX(.6)}
+.menuIcon--open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
 
 /* Mobile overlay (dims + blurs the entire site behind) */
 .mobileOverlay{position:fixed;inset:0;z-index:1100;
@@ -84,9 +147,20 @@
 		transform .98s cubic-bezier(.16,1,.3,1)}
 .mobileOverlay--open .mobilePanel{opacity:1;transform:translate3d(0,0,0) scale(1);transition-delay:140ms}
 
+.mobilePanel:after{content:"";position:absolute;inset:-20%;z-index:-2;pointer-events:none;opacity:.55;
+	background:
+		radial-gradient(520px 360px at 20% 20%, rgba(var(--acc-rgb),.16), transparent 60%),
+		radial-gradient(460px 360px at 80% 35%, rgba(var(--acc2-rgb),.12), transparent 60%),
+		radial-gradient(460px 360px at 55% 85%, rgba(var(--acc3-rgb),.10), transparent 60%);
+	filter:blur(14px);
+	transform:translate3d(0,0,0);
+	animation:mobileNeonDrift 12s ease-in-out infinite}
+
 @media (prefers-reduced-motion: reduce){
 	.mobileOverlay,.mobilePanel,.navInner{transition:none !important}
 	.mobileOverlay{backdrop-filter:none}
+	.mobilePanel:after{animation:none !important}
+	.menuButton{animation:none !important}
 }
 .mobilePanel:before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.18;z-index:-1;
 	background-image:
@@ -104,7 +178,10 @@
 	background:rgba(255,255,255,.03);
 	color:var(--text);
 	font-size:26px;line-height:1}
-.mobileClose:hover{background:rgba(255,255,255,.06)}
+.mobileClose:hover{background:rgba(255,255,255,.06);
+	border-color:rgba(var(--acc-rgb),.30);
+	box-shadow:0 18px 50px rgba(0,0,0,.22),0 0 22px rgba(var(--acc-rgb),.16);
+	transform:translateY(-1px)}
 .mobileLinks{display:flex;flex-direction:column;gap:10px;padding-top:12px;
 	max-width:520px;width:100%;margin:0 auto}
 .mobileLinks a{padding:14px 14px;border-radius:14px;text-decoration:none;
@@ -112,8 +189,12 @@
 	color:var(--text);
 	border:1px solid rgba(255,255,255,.10);
 	background:rgba(255,255,255,.035);
-	backdrop-filter:blur(10px)}
-.mobileLinks a:hover{border-color:rgba(var(--acc-rgb),.28);background:rgba(255,255,255,.05)}
+	backdrop-filter:blur(10px);
+	transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background .18s ease,filter .18s ease}
+.mobileLinks a:hover{border-color:rgba(var(--acc-rgb),.34);background:rgba(255,255,255,.05);
+	transform:translateY(-1px) scale(1.01);
+	box-shadow:0 18px 60px rgba(0,0,0,.22),0 0 22px rgba(var(--acc-rgb),.12);
+	filter:saturate(1.05)}
 
 @media (max-width: 880px){
 	.links{display:none}
@@ -121,18 +202,17 @@
 }
 
 @keyframes brandPulse{
-	0%,100%{
-		filter:drop-shadow(0 0 14px rgba(var(--acc-rgb),.18));
-		text-shadow:
-			0 0 10px rgba(var(--acc-rgb),.22),
-			0 0 22px rgba(var(--acc2-rgb),.16),
-			0 0 36px rgba(var(--acc3-rgb),.12);
-	}
-	50%{
-		filter:drop-shadow(0 0 22px rgba(var(--acc-rgb),.28));
-		text-shadow:
-			0 0 12px rgba(var(--acc-rgb),.30),
-			0 0 28px rgba(var(--acc2-rgb),.22),
-			0 0 46px rgba(var(--acc3-rgb),.18);
-	}
+	0%,100%{filter:drop-shadow(0 0 12px rgba(var(--acc-rgb),.12))}
+	50%{filter:drop-shadow(0 0 16px rgba(var(--acc-rgb),.16))}
+}
+
+@keyframes menuNeonPulse{
+	0%,100%{box-shadow:0 18px 50px rgba(0,0,0,.25),0 0 26px rgba(var(--acc-rgb),.18),0 0 44px rgba(var(--acc2-rgb),.10)}
+	50%{box-shadow:0 22px 64px rgba(0,0,0,.30),0 0 34px rgba(var(--acc-rgb),.26),0 0 58px rgba(var(--acc2-rgb),.14)}
+}
+
+@keyframes mobileNeonDrift{
+	0%{transform:translate3d(-2%, -1%, 0) scale(1)}
+	50%{transform:translate3d(2%, 1%, 0) scale(1.03)}
+	100%{transform:translate3d(-2%, -1%, 0) scale(1)}
 }

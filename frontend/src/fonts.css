@@ -1,0 +1,31 @@
+/*
+  Digitalt by gluk (logo font)
+  
+  IMPORTANT:
+  - Include the font files yourself in: src/assets/fonts/
+  - Use legally obtained/licensed font files.
+
+  Supported filenames (recommended):
+    - src/assets/fonts/Digitalt.woff2
+    - src/assets/fonts/Digitalt.woff
+
+  If you have the font installed locally, the `local()` sources may work without bundling.
+*/
+
+@font-face {
+  font-family: 'Digitalt';
+  src:
+    local('Digitalt'),
+    local('Digitalt by gluk');
+
+  /*
+    If you add the font files, uncomment the `url(...)` sources below.
+    NOTE: In CRA/Vite/Webpack builds, missing files here will FAIL the build.
+
+    url('./assets/fonts/Digitalt.woff2') format('woff2'),
+    url('./assets/fonts/Digitalt.woff') format('woff');
+  */
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}

@@ -2,8 +2,20 @@ import React, { useEffect, useMemo, useState } from 'react';
 import './Navigation.css';
 
 export default function Navigation({ profile }) {
-  const brand = 'MN';
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const brandMark = (
+    <span className="brandMark" aria-hidden="true">
+      <span className="brandLogo" aria-hidden="true">
+        <span className="brandLogoBg" />
+        <span className="brandLogoTrace" />
+        <span className="brandLogoLetters">
+          <span className="brandLogoM">M</span>
+        </span>
+      </span>
+    </span>
+  );
 
   const links = useMemo(() => ([
     { href: '#projects', label: 'Projects' },
@@ -33,13 +45,53 @@ export default function Navigation({ profile }) {
     };
   }, [open]);
 
+  useEffect(() => {
+    // Hide navbar when scrolling down; show when scrolling up.
+    // Disabled while mobile menu is open.
+    if (open) {
+      setHidden(false);
+      return undefined;
+    }
+
+    let lastY = window.scrollY || 0;
+    let raf = 0;
+
+    const onScroll = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(() => {
+        raf = 0;
+        const y = window.scrollY || 0;
+
+        // Always show at the top.
+        if (y < 24) {
+          setHidden(false);
+          lastY = y;
+          return;
+        }
+
+        const delta = y - lastY;
+        if (delta > 10) setHidden(true);
+        if (delta < -10) setHidden(false);
+
+        lastY = y;
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      if (raf) window.cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [open]);
+
   return (
-    <header className={`nav ${open ? 'nav--menuOpen' : ''}`}
+    <header className={`nav ${open ? 'nav--menuOpen' : ''} ${hidden ? 'nav--hidden' : ''}`}
       data-menu-open={open ? 'true' : 'false'}
+      data-hidden={hidden ? 'true' : 'false'}
     >
       <div className="navInner">
         <a className="brand" href="#home" aria-label={profile?.fullName || 'Portfolio'} onClick={() => setOpen(false)}>
-          <span className="brandText">{brand}</span>
+          {brandMark}
         </a>
 
         <nav className="links" aria-label="Primary">
@@ -56,7 +108,7 @@ export default function Navigation({ profile }) {
           aria-controls="mobileNav"
           onClick={() => setOpen((v) => !v)}
         >
-          <span className="menuIcon" aria-hidden="true">
+          <span className={`menuIcon ${open ? 'menuIcon--open' : ''}`} aria-hidden="true">
             <span />
             <span />
             <span />
@@ -76,7 +128,7 @@ export default function Navigation({ profile }) {
       >
         <div className="mobilePanel" role="dialog" aria-modal="true" id="mobileNav" aria-label="Menu">
           <div className="mobileHeader">
-            <div className="mobileBrand" aria-hidden="true">{brand}</div>
+            <div className="mobileBrand" aria-hidden="true">{brandMark}</div>
             <button className="mobileClose" type="button" onClick={() => setOpen(false)} aria-label="Close menu">×</button>
           </div>
           <div className="mobileLinks">
