@@ -10,7 +10,7 @@ export default function About({ profile }) {
           <h2 className="sectionTitle--caps">About</h2>
         </div>
 
-        <div className="aboutCard">
+        <div className="aboutCard gsap-item">
           {about ? (
             <p>{about}</p>
           ) : (

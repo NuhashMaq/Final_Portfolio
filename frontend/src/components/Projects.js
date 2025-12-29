@@ -10,9 +10,9 @@ export default function Projects({ projects }) {
         </div>
 
         {projects?.length ? (
-          <div className="grid">
+          <div className="grid gsap-stagger">
             {projects.map((p) => (
-              <article key={p.id} className="card">
+              <article key={p.id} className="card gsap-item">
                 <div className="thumb" aria-hidden="true">
                   {p.image ? (
                     <img

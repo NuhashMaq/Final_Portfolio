@@ -10,9 +10,9 @@ export default function Certifications({ items }) {
         </div>
 
         {items?.length ? (
-          <div className="resumeGrid">
+          <div className="resumeGrid gsap-stagger">
             {items.map((c, idx) => (
-              <article className="resumeCard" key={`${c.title}-${idx}`}>
+              <article className="resumeCard gsap-item" key={`${c.title}-${idx}`}>
                 <div className="resumeTitle resumeTitle--caps">{c.title}</div>
                 {c.issuer ? <div className="resumeOrg">{c.issuer}</div> : null}
                 {c.type ? <div className="resumeMeta">{c.type}</div> : null}

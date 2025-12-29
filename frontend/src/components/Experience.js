@@ -10,9 +10,9 @@ export default function Experience({ items }) {
         </div>
 
         {items?.length ? (
-          <div className="resumeList">
+          <div className="resumeList gsap-stagger">
             {items.map((x, idx) => (
-              <article className="resumeCard" key={`${x.company}-${idx}`}>
+              <article className="resumeCard gsap-item" key={`${x.company}-${idx}`}>
                 <div className="resumeTop">
                   <div>
                     <div className="resumeTitle resumeTitle--caps">{x.role}</div>

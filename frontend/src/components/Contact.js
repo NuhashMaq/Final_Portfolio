@@ -37,7 +37,7 @@ export default function Contact({ profile }) {
 
         <div className="contactLayout">
           <div className="contactInfo">
-            <div className="contactInfoCard">
+            <div className="contactInfoCard gsap-item">
               <div className="contactName">{profile?.fullName || 'Your Name'}</div>
               {profile?.email ? (
                 <a className="contactLink" href={`mailto:${profile.email}`}>{profile.email}</a>
@@ -54,7 +54,7 @@ export default function Contact({ profile }) {
             </div>
           </div>
 
-          <form className="contactCard" onSubmit={onSubmit}>
+          <form className="contactCard gsap-item" onSubmit={onSubmit}>
           <div className="row">
             <label>
               Name

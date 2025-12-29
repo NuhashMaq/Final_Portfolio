@@ -1,3 +1,12 @@
 .aboutCard{padding:18px;border-radius:16px;border:1px solid rgba(255,255,255,.10);
 	background:linear-gradient(135deg,rgba(var(--acc2-rgb),.08),rgba(255,255,255,.02));
-	color:var(--muted);line-height:1.75}
+	color:var(--muted);line-height:1.75;
+	position:relative;overflow:hidden;
+	transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+.aboutCard:before{content:"";position:absolute;inset:-1px;border-radius:16px;pointer-events:none;opacity:0;
+	background:radial-gradient(600px 220px at 18% 20%,rgba(var(--acc-rgb),.22),transparent 55%),
+		radial-gradient(520px 220px at 85% 80%,rgba(var(--acc3-rgb),.18),transparent 60%);
+	filter:blur(12px)}
+.aboutCard:hover{border-color:rgba(var(--acc2-rgb),.26);transform:translateY(-1px);
+	box-shadow:0 28px 70px rgba(0,0,0,.26)}
+.aboutCard:hover:before{opacity:1}

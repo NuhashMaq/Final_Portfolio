@@ -10,7 +10,7 @@ export default function Skills({ skills }) {
         </div>
 
         {skills?.length ? (
-          <div className="skillsMarqueeStack">
+          <div className="skillsMarqueeStack gsap-stagger">
             {skills.map((cat, idx) => {
               const items = cat.items || [];
               // Deduplicate by skill name to keep counts accurate even if DB contains duplicates.
@@ -23,7 +23,7 @@ export default function Skills({ skills }) {
               const duration = Math.max(18, Math.min(42, uniqueCount * 2.2));
 
               return (
-                <div className="skillsMarqueeCard" key={cat.category}>
+                <div className="skillsMarqueeCard gsap-item" key={cat.category}>
                   <div className="skillsMarqueeHead">
                     <span className="catPill">{cat.category}</span>
                     <span className="skillsMeta">{uniqueCount} items</span>

@@ -11,6 +11,7 @@ import Activities from './components/Activities';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import { apiGet } from './api';
+import useGsapScrollReveal from './hooks/useGsapScrollReveal';
 import './App.css';
 
 export default function App() {
@@ -60,33 +61,8 @@ export default function App() {
     };
   }, []);
 
-  // Lightweight scroll-reveal animation (no libraries):
-  // adds .reveal--in when elements enter the viewport.
-  useEffect(() => {
-    const targets = Array.from(document.querySelectorAll('.reveal'));
-    if (!targets.length) return;
-
-    // If IntersectionObserver isn't available, just show everything.
-    if (typeof IntersectionObserver === 'undefined') {
-      targets.forEach((el) => el.classList.add('reveal--in'));
-      return;
-    }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('reveal--in');
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { root: null, threshold: 0.12, rootMargin: '0px 0px -8% 0px' }
-    );
-
-    targets.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+  // Site-wide scroll reveal using GSAP (with reduced-motion support).
+  useGsapScrollReveal();
 
   return (
     <div className="app">

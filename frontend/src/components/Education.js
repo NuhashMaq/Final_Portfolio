@@ -10,9 +10,9 @@ export default function Education({ items }) {
         </div>
 
         {items?.length ? (
-          <div className="resumeList">
+          <div className="resumeList gsap-stagger">
             {items.map((e, idx) => (
-              <article className="resumeCard" key={`${e.institution}-${idx}`}>
+              <article className="resumeCard gsap-item" key={`${e.institution}-${idx}`}>
                 <div className="resumeTop">
                   <div>
                     <div className="resumeTitle resumeTitle--caps">{e.degree}</div>

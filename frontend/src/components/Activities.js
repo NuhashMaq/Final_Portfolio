@@ -10,9 +10,9 @@ export default function Activities({ items }) {
         </div>
 
         {items?.length ? (
-          <div className="resumeGrid">
+          <div className="resumeGrid gsap-stagger">
             {items.map((a, idx) => (
-              <article className="resumeCard" key={`${a.role}-${idx}`}>
+              <article className="resumeCard gsap-item" key={`${a.role}-${idx}`}>
                 <div className="resumeTitle resumeTitle--caps">{a.role}</div>
                 <div className="resumeOrg">{a.organization}</div>
               </article>
