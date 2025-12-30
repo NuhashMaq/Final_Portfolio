@@ -28,8 +28,8 @@ PROFILE = {
     ),
     "links": {
         "linkedin": "https://www.linkedin.com/",
-        "facebook": "https://www.facebook.com/",
-        "instagram": "https://www.instagram.com/",
+        "facebook": "https://www.facebook.com/imashfiqnaushadd",
+        "instagram": "https://www.instagram.com/__maashfiiiiq__/",
         "twitter": "https://x.com/_maashfiiiiq_"
     }
 }

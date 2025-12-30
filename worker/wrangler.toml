@@ -1,0 +1,16 @@
+name = "clickupproject-api"
+main = "src/index.ts"
+compatibility_date = "2025-12-30"
+
+# Needed for some npm dependencies (like supabase-js) in Workers.
+compatibility_flags = ["nodejs_compat"]
+
+# Optional: set your allowed frontend origin(s) here (comma-separated).
+# You can also set/override this in the Cloudflare dashboard.
+[vars]
+# Production CORS allowlist (comma-separated)
+CORS_ORIGINS = "https://final-portfolio-5ai.pages.dev"
+
+# Optional: protect write endpoints (POST /api/projects, POST /api/skills)
+# If set, requests must include header: X-Admin-Token: <ADMIN_TOKEN>
+ADMIN_TOKEN = ""

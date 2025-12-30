@@ -1,0 +1,1 @@
+This folder contains the built output assets for the worker "clickupproject-api" generated at 2025-12-30T12:50:50.834Z.

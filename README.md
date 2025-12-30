@@ -246,3 +246,94 @@ Open the Command Palette → “Tasks: Run Task”, then run:
 - `Run All (dev)` — starts backend + frontend
 - `Cleanup: Remove artifacts` — removes build/node_modules/venv artifacts (use carefully)
 
+---
+
+## Free deployment (Cloudflare Pages + Workers + Supabase)
+
+You asked for a **fully free** hosting setup:
+
+- **Frontend:** Cloudflare Pages (static React build)
+- **Backend:** Cloudflare Workers (JavaScript/TypeScript)
+- **Database:** Supabase (Postgres)
+
+Important constraint: **Cloudflare Workers cannot run this Flask (Python) backend directly.**
+So this repo now includes a Worker implementation in `worker/` that matches the existing `/api/*` routes.
+You can keep Flask for local development and use the Worker in production.
+
+### 1) Create Supabase database (free tier)
+
+1. Create a Supabase project.
+2. Open **SQL Editor**.
+3. Run `supabase/schema.sql`.
+4. Run `supabase/seed.sql`.
+
+Then collect:
+
+- `SUPABASE_URL` (Project Settings → API)
+- `SUPABASE_SERVICE_ROLE_KEY` (Project Settings → API)
+
+Keep the **service role key secret** (do not put it in frontend env vars).
+
+### 2) Deploy backend to Cloudflare Workers (free tier)
+
+The Worker source is in `worker/src/index.ts`.
+
+In Cloudflare:
+
+1. Install Wrangler and authenticate (one-time):
+	- `npm i -g wrangler`
+	- `wrangler login`
+2. In `worker/`, install deps and deploy:
+	- `npm install`
+	- `wrangler deploy`
+3. Set Worker secrets (required):
+	- `SUPABASE_URL`
+	- `SUPABASE_SERVICE_ROLE_KEY`
+
+Also set/confirm CORS allowlist:
+
+- `CORS_ORIGINS` (comma-separated), e.g. `https://your-pages-site.pages.dev`
+
+After deploy, your API will be available at a URL like:
+
+- `https://<worker-name>.<your-account>.workers.dev/api/health`
+
+### 3) Deploy frontend to Cloudflare Pages (free tier)
+
+Cloudflare Pages will build the React app.
+
+Key settings:
+
+- **Root directory:** `frontend`
+- **Build command:** `npm run build`
+- **Build output directory:** `build`
+
+SPA routing is enabled via `frontend/public/_redirects`.
+
+Set the frontend env var in Cloudflare Pages (Build-time env vars):
+
+- `REACT_APP_API_URL=https://<your-worker-url>`
+
+Example:
+
+- `REACT_APP_API_URL=https://clickupproject-api.<account>.workers.dev`
+
+### 4) Custom domain (optional, still free)
+
+If you want `www.yourdomain.com` for Pages and `api.yourdomain.com` for Workers:
+
+1. Add the domain to Cloudflare.
+2. In Pages, add the custom domain.
+3. In Workers, add a custom domain/route.
+4. Update `CORS_ORIGINS` to include your Pages domain.
+
+### Notes on the contact form
+
+The Flask backend can send SMTP email.
+The Worker version currently:
+
+- Saves the message to Supabase (`contacts` table)
+- Returns a response indicating email delivery is not configured
+
+This keeps the deployment fully free and avoids SMTP credentials on Workers.
+

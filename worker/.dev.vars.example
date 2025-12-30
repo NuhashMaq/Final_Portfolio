@@ -1,0 +1,11 @@
+# Copy to worker/.dev.vars for local `wrangler dev`
+# NEVER commit real secrets.
+
+SUPABASE_URL=https://YOUR_PROJECT_REF.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SUPABASE_SERVICE_ROLE_KEY
+
+# Comma-separated allowlist for browser origins (optional)
+CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
+
+# Optional: protect write endpoints (projects/skills)
+ADMIN_TOKEN=
