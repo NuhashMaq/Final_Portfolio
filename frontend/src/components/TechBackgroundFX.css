@@ -1,5 +1,23 @@
 .techFx{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;isolation:isolate}
 
+/* Static mode: used for mobile performance and reduced-motion.
+	Keep the aesthetic, but stop all background movement & heavy layers. */
+.techFx--static .techFx__grid,
+.techFx--static .techFx__circuits .circuitSet,
+.techFx--static .codeCol,
+.techFx--static .shard,
+.techFx--static .particle,
+.techFx--static .syntaxBit,
+.techFx--static .glyph{animation:none !important}
+
+.techFx--static .techFx__cursorLight,
+.techFx--static .techFx__code,
+.techFx--static .techFx__syntax,
+.techFx--static .techFx__glyphs,
+.techFx--static .techFx__particles,
+.techFx--static .techFx__shards,
+.techFx--static .techFx__circuits{display:none !important}
+
 .techFx__vignette{position:absolute;inset:-20%;background:
 	radial-gradient(900px 520px at 20% 10%,rgba(var(--acc-rgb),.10),transparent 60%),
 	radial-gradient(800px 520px at 80% 20%,rgba(var(--acc2-rgb),.09),transparent 60%),

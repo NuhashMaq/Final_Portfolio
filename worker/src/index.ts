@@ -161,18 +161,21 @@ function parseCorsOrigins(raw: string | undefined): string[] {
     .filter(Boolean);
 }
 
-function pickOrigin(req: Request, env: Env): string {
-  const origin = req.headers.get('Origin') ?? '';
+function getAllowedCorsOrigin(req: Request, env: Env): string | null {
   const allow = parseCorsOrigins(env.CORS_ORIGINS);
-
   if (allow.includes('*')) return '*';
-  if (!origin) return allow[0] ?? '*';
-  if (allow.includes(origin)) return origin;
-  // Not allowed: return first configured origin (prevents reflecting attacker origins)
-  return allow[0] ?? '*';
+
+  const origin = (req.headers.get('Origin') ?? '').trim();
+  if (!origin) {
+    // Non-browser clients typically won't send Origin; pick a deterministic value.
+    return allow[0] ?? null;
+  }
+
+  return allow.includes(origin) ? origin : null;
 }
 
-function corsHeaders(origin: string): HeadersInit {
+function corsHeaders(origin: string | null): HeadersInit {
+  if (!origin) return {};
   return {
     'Access-Control-Allow-Origin': origin,
     Vary: 'Origin',
@@ -183,7 +186,7 @@ function corsHeaders(origin: string): HeadersInit {
 }
 
 function jsonResponse(req: Request, env: Env, body: unknown, status = 200): Response {
-  const origin = pickOrigin(req, env);
+  const origin = getAllowedCorsOrigin(req, env);
   return new Response(JSON.stringify(body), {
     status,
     headers: {
@@ -229,7 +232,8 @@ export default {
 
     // CORS preflight
     if (req.method === 'OPTIONS') {
-      const origin = pickOrigin(req, env);
+      const origin = getAllowedCorsOrigin(req, env);
+      if (!origin) return new Response(null, { status: 403 });
       return new Response(null, { status: 204, headers: corsHeaders(origin) });
     }
 

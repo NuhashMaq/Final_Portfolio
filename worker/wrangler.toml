@@ -9,7 +9,7 @@ compatibility_flags = ["nodejs_compat"]
 # You can also set/override this in the Cloudflare dashboard.
 [vars]
 # Production CORS allowlist (comma-separated)
-CORS_ORIGINS = "https://final-portfolio-5ai.pages.dev"
+CORS_ORIGINS = "https://maashfiiiiq.pages.dev,https://9413a062.maashfiiiiq.pages.dev,https://final-portfolio-5ai.pages.dev"
 
 # Optional: protect write endpoints (POST /api/projects, POST /api/skills)
 # If set, requests must include header: X-Admin-Token: <ADMIN_TOKEN>

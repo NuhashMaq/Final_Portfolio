@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import usePrefersReducedMotion from './usePrefersReducedMotion';
+import useIsMobileViewport from './useIsMobileViewport';
 
 function clamp(n, min, max) {
   return Math.max(min, Math.min(max, n));
@@ -13,6 +14,7 @@ function lerp(a, b, t) {
 // Variables include multiple parallax scales (s/m/l) so CSS can remain simple.
 export default function useAmbientMotionVars() {
   const reducedMotion = usePrefersReducedMotion();
+  const isMobile = useIsMobileViewport();
 
   useEffect(() => {
     const root = document.documentElement;
@@ -79,8 +81,8 @@ export default function useAmbientMotionVars() {
       root.style.setProperty('--scrollP', `${p.toFixed(4)}`);
     }
 
-    // Reduced motion: keep variables stable (no RAF), but still set scrollP once.
-    if (reducedMotion) {
+    // Reduced motion OR mobile: keep variables stable (no RAF), but still set scrollP once.
+    if (reducedMotion || isMobile) {
       onScroll();
       return;
     }
@@ -98,5 +100,5 @@ export default function useAmbientMotionVars() {
       window.removeEventListener('resize', onScroll);
       window.cancelAnimationFrame(raf);
     };
-  }, [reducedMotion]);
+  }, [reducedMotion, isMobile]);
 }

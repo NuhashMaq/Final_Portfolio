@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import usePrefersReducedMotion from '../hooks/usePrefersReducedMotion';
+import useIsMobileViewport from '../hooks/useIsMobileViewport';
 import './TechBackgroundFX.css';
 
 function range(n) {
@@ -8,6 +9,7 @@ function range(n) {
 
 export default function TechBackgroundFX() {
   const reducedMotion = usePrefersReducedMotion();
+  const isMobile = useIsMobileViewport();
 
   const shards = useMemo(() => {
     // “Thrown” neon shards — slow by design.
@@ -102,8 +104,13 @@ export default function TechBackgroundFX() {
     });
   }, []);
 
-  if (reducedMotion) {
-    return <div className="techFx" aria-hidden="true" />;
+  if (reducedMotion || isMobile) {
+    return (
+      <div className="techFx techFx--static" aria-hidden="true">
+        <div className="techFx__vignette" />
+        <div className="techFx__grid" />
+      </div>
+    );
   }
 
   return (
