@@ -33,3 +33,4 @@ Thumbs.db
 # Cloudflare / Wrangler
 **/.wrangler/
 worker/.dev.vars
+worker/.wrangler-out/
