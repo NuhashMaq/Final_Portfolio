@@ -9,3 +9,12 @@ CORS_ORIGINS=http://localhost:3000,http://127.0.0.1:3000
 
 # Optional: protect write endpoints (projects/skills)
 ADMIN_TOKEN=
+
+# Optional: Contact form email delivery (recommended: Resend)
+# Create an API key in Resend and set it here (or as a CF Worker secret in production).
+EMAIL_PROVIDER=resend
+RESEND_API_KEY=
+CONTACT_TO_EMAIL=your@email.com
+# In Resend, FROM must be a verified domain/address. For initial testing you can use:
+#   Portfolio Contact <onboarding@resend.dev>
+CONTACT_FROM_EMAIL=

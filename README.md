@@ -258,6 +258,43 @@ You asked for a **fully free** hosting setup:
 
 Important constraint: **Cloudflare Workers cannot run this Flask (Python) backend directly.**
 So this repo now includes a Worker implementation in `worker/` that matches the existing `/api/*` routes.
+
+### Contact form email delivery (Workers)
+
+When deployed with **Workers + Supabase**, the contact form always **stores** submissions in Supabase (`contacts` table).
+
+If you also want to **receive an email** in your inbox, you must configure an **outbound email provider**.
+Supabase is a database and does not send emails to you automatically.
+
+This project supports email delivery from the Worker via **Resend** (free tier available).
+
+#### 1) Create Resend API key
+
+- Create an account at Resend
+- Create an API key
+- (Recommended) Verify a sending domain/address so you can use your own `from`
+
+#### 2) Configure Worker secrets/vars
+
+Set the secret (do NOT commit it):
+
+- `RESEND_API_KEY` (secret)
+
+Set the non-secret vars (Cloudflare dashboard “Variables” or via Wrangler flags):
+
+- `EMAIL_PROVIDER=resend`
+- `CONTACT_TO_EMAIL=your@email.com` (where you want to receive messages)
+- `CONTACT_FROM_EMAIL=Your Name <you@yourdomain.com>`
+
+Notes:
+
+- Resend requires `CONTACT_FROM_EMAIL` to be a verified sender. For initial testing you can often use:
+	`Portfolio Contact <onboarding@resend.dev>`
+- The user’s email from the form is set as **Reply-To** so you can reply directly.
+
+#### 3) Deploy Worker
+
+After setting the above, redeploy the Worker. The API response from `POST /api/contact` will include an `emailDelivery` field showing whether email was sent.
 You can keep Flask for local development and use the Worker in production.
 
 ### 1) Create Supabase database (free tier)

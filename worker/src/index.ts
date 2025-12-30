@@ -7,6 +7,13 @@ interface Env {
   SUPABASE_SERVICE_ROLE_KEY: string;
   CORS_ORIGINS?: string;
   ADMIN_TOKEN?: string;
+
+  // Optional: contact-form email delivery via HTTP email API
+  // (Recommended: Resend)
+  EMAIL_PROVIDER?: string; // e.g. "resend"
+  RESEND_API_KEY?: string;
+  CONTACT_TO_EMAIL?: string;
+  CONTACT_FROM_EMAIL?: string;
 }
 
 // ---- Static portfolio content (ported from backend/content.py) ----
@@ -211,6 +218,73 @@ function requireAdminToken(req: Request, env: Env): Response | null {
   return null;
 }
 
+type EmailDeliveryResult =
+  | { sent: true; skipped: false; provider: string; id?: string }
+  | { sent: false; skipped: true; reason: string; provider?: string }
+  | { sent: false; skipped: false; provider: string; error: string; details?: unknown };
+
+async function sendContactEmail(env: Env, payload: { name: string; email: string; message: string }): Promise<EmailDeliveryResult> {
+  const provider = (env.EMAIL_PROVIDER ?? 'resend').trim().toLowerCase();
+  if (!provider) return { sent: false, skipped: true, reason: 'EMAIL_PROVIDER is empty' };
+
+  if (provider !== 'resend') {
+    return { sent: false, skipped: true, reason: `Unsupported EMAIL_PROVIDER: ${provider}`, provider };
+  }
+
+  const apiKey = (env.RESEND_API_KEY ?? '').trim();
+  const to = (env.CONTACT_TO_EMAIL ?? '').trim();
+  const from = (env.CONTACT_FROM_EMAIL ?? '').trim() || 'Portfolio Contact <onboarding@resend.dev>';
+
+  if (!apiKey) return { sent: false, skipped: true, reason: 'RESEND_API_KEY is not configured', provider: 'resend' };
+  if (!to) return { sent: false, skipped: true, reason: 'CONTACT_TO_EMAIL is not configured', provider: 'resend' };
+
+  const subject = `Portfolio contact: ${payload.name}`;
+  const text = [
+    'New contact form submission',
+    '',
+    `Name: ${payload.name}`,
+    `Email: ${payload.email}`,
+    '',
+    payload.message
+  ].join('\n');
+
+  // Resend API: https://resend.com/docs/api-reference/emails/send-email
+  const resp = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${apiKey}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from,
+      to: [to],
+      subject,
+      reply_to: payload.email,
+      text
+    })
+  });
+
+  const raw = await resp.text();
+  let parsed: any = undefined;
+  try {
+    parsed = raw ? JSON.parse(raw) : undefined;
+  } catch {
+    parsed = raw;
+  }
+
+  if (!resp.ok) {
+    return {
+      sent: false,
+      skipped: false,
+      provider: 'resend',
+      error: `Resend API error (${resp.status})`,
+      details: parsed
+    };
+  }
+
+  return { sent: true, skipped: false, provider: 'resend', id: parsed?.id };
+}
+
 function getSupabase(env: Env) {
   if (!env.SUPABASE_URL || !env.SUPABASE_SERVICE_ROLE_KEY) {
     throw new Error('Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
@@ -356,19 +430,25 @@ export default {
 
         if (error) return errorResponse(req, env, 500, 'Failed to create contact message', error);
 
-        return jsonResponse(
-          req,
-          env,
-          {
-            ...data,
-            emailDelivery: {
-              sent: false,
-              skipped: true,
-              reason: 'Email delivery is not configured for the Worker. Message saved to database.'
-            }
-          },
-          201
-        );
+        let emailDelivery: EmailDeliveryResult = {
+          sent: false,
+          skipped: true,
+          reason: 'Email delivery not configured. Message saved to database.'
+        };
+
+        try {
+          emailDelivery = await sendContactEmail(env, { name, email, message });
+        } catch (e) {
+          emailDelivery = {
+            sent: false,
+            skipped: false,
+            provider: (env.EMAIL_PROVIDER ?? 'resend').trim().toLowerCase() || 'unknown',
+            error: 'Email delivery threw an exception',
+            details: (e as Error)?.message ?? String(e)
+          };
+        }
+
+        return jsonResponse(req, env, { ...data, emailDelivery }, 201);
       }
 
       return errorResponse(req, env, 404, 'Not found');
