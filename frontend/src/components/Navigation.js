@@ -5,6 +5,47 @@ export default function Navigation({ profile }) {
   const [open, setOpen] = useState(false);
   const [hidden, setHidden] = useState(false);
 
+  function scrollToHash(href) {
+    if (!href || href[0] !== '#') return;
+
+    const id = href.slice(1);
+    const el = document.getElementById(id);
+    if (!el) {
+      // Fallback: still update the URL hash.
+      window.location.hash = href;
+      return;
+    }
+
+    // Account for fixed navbar height.
+    const NAV_OFFSET = 80;
+    const top = el.getBoundingClientRect().top + window.pageYOffset - NAV_OFFSET;
+    window.history.pushState(null, '', href);
+    window.scrollTo({ top: Math.max(0, top), behavior: 'smooth' });
+  }
+
+  function onNavClick(e, href) {
+    // On mobile, the menu locks body scroll while open.
+    // If we let the browser do default hash navigation immediately,
+    // some mobile browsers won’t scroll because body overflow is still "hidden".
+    if (href && href[0] === '#') {
+      e.preventDefault();
+
+      if (open) {
+        // Unlock immediately so the upcoming scroll works reliably.
+        document.body.style.overflow = '';
+        setOpen(false);
+        // Defer to the next frame so the overlay starts closing.
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => scrollToHash(href));
+        });
+      } else {
+        scrollToHash(href);
+      }
+    } else {
+      setOpen(false);
+    }
+  }
+
   const brandMark = (
     <span className="brandMark" aria-hidden="true">
       <span className="brandLogo" aria-hidden="true">
@@ -90,13 +131,13 @@ export default function Navigation({ profile }) {
       data-hidden={hidden ? 'true' : 'false'}
     >
       <div className="navInner">
-        <a className="brand" href="#home" aria-label={profile?.fullName || 'Portfolio'} onClick={() => setOpen(false)}>
+        <a className="brand" href="#home" aria-label={profile?.fullName || 'Portfolio'} onClick={(e) => onNavClick(e, '#home')}>
           {brandMark}
         </a>
 
         <nav className="links" aria-label="Primary">
           {links.map((l) => (
-            <a key={l.href} href={l.href}>{l.label}</a>
+            <a key={l.href} href={l.href} onClick={(e) => onNavClick(e, l.href)}>{l.label}</a>
           ))}
         </nav>
 
@@ -133,7 +174,7 @@ export default function Navigation({ profile }) {
           </div>
           <div className="mobileLinks">
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={() => setOpen(false)}>{l.label}</a>
+              <a key={l.href} href={l.href} onClick={(e) => onNavClick(e, l.href)}>{l.label}</a>
             ))}
           </div>
         </div>
